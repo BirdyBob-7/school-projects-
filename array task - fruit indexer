@@ -1,0 +1,57 @@
+ 
+from pathlib import Path
+
+
+def load_words(filename):
+    file_path = Path(__file__).resolve().parent / filename
+
+    if not file_path.is_file():
+        raise FileNotFoundError(
+            f"Could not find the word file: {file_path}\n"
+            "Place fruits.txt in the same folder as this program."
+        )
+
+    with file_path.open("r", encoding="utf-8") as file:
+        words = [line.strip() for line in file if line.strip() != ""]
+    return words
+ 
+ 
+def get_valid_input(prompt):
+    user_input = input(prompt)
+    while user_input.strip() == "":
+        print("You may not leave this blank. Please try again.")
+        user_input = input(prompt)
+    return user_input
+ 
+ 
+def linear_search(word_list, search_item):
+    target = search_item.lower()
+    for i in range(len(word_list)):
+        if word_list[i].lower() == target:
+            return i 
+    return -1
+ 
+ 
+def main():
+    words = load_words("fruits.txt")
+ 
+    print("Word Search Program")
+    print("Type 'Exit' at any time to quit.\n")
+
+    while True:
+        search_item = get_valid_input("Enter a word to search for: ")
+
+        if search_item.lower() == "exit":
+            print("Goodbye!")
+            break
+
+        result = linear_search(words, search_item)
+
+        if result != -1:
+            print(f'"{search_item}" was found at location {result} in the array.\n')
+        else:
+            print("Word not found.\n")
+
+
+if __name__ == "__main__":
+    main()

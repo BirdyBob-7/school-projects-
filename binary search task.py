@@ -16,7 +16,6 @@ def binary_search_count(numbers, x):
             high = mid - 1
     return iterations
  
- 
 def main():
     size = 1000
     numbers = sorted(random.sample(range(1, 1000000), size))
